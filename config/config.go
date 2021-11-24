@@ -2,7 +2,6 @@ package config
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -10,20 +9,20 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-func ReadConfig(cfg interface{}, path string, fileName string) error {
+func ReadConfig(cfg interface{}, fullPathURL string) error {
 
-	getFormatFile := filePath(path)
+	getFormatFile := filePath(fullPathURL)
 
 	switch getFormatFile {
 	case ".json":
-		fname := fmt.Sprintf("%s/%s", path, fileName)
+		fname := fullPathURL
 		jsonFile, err := ioutil.ReadFile(fname)
 		if err != nil {
 			return err
 		}
 		return json.Unmarshal(jsonFile, cfg)
 	default:
-		fname := fmt.Sprintf("%s/%s", path, fileName)
+		fname := fullPathURL
 		yamlFile, err := ioutil.ReadFile(fname)
 		if err != nil {
 			return err
